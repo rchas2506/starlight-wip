@@ -1,0 +1,52 @@
+---
+title: Hosting a virtual server using AWS free tier
+description: This guide is based upon the methods I used to get started.
+---
+
+AWS offers a <a href="https://aws.amazon.com/free"> range of free services</a> and trails. We'll take advantage of this to host our own server on an EC2 instance and learn a little along the way. How you choose it use it is your choice, but a webserver is always an easy choice to start with. 
+AWS provides 750 EC2 hours per month, and includes a public IPV4 address as part of this.
+
+/*Enter info here regarding account setup & IPAM*/  
+
+# AWS EC2 instance
+
+## Creating an EC2 instance
+
+For this guide, we can ignore most network settings as you'll be setup with a default VPC.
+
+import { Steps } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+
+<Steps> 
+
+1. Launch an EC2 instance from the EC2 dashboard.
+
+2. Set your instance name, OS image (We'll use the latest ubuntu for this guide), and leave the instance type as is. 
+
+3. Generate a new key pair - Leave the type as RSA and ensure the key file format matches the SSH client you'll use. For this, we'll stick with .ppk - Save this somewhere safe
+
+4. Choose the create security group option, and allow SSH and HTTP traffic. It'll be ideal to select the "My IP" option when choosing who can SSH onto your instance. 
+
+5. Choose how much storage you want/need and launch your instance.
+
+</Steps>
+
+<Aside type="tip">You can allocate the entire free allowance even if you don't require this amount - You can use the extra storage to create a larger swap file.</Aside>
+
+
+
+Your instance will begin initializing and go online. I'd suggest reviewing the data available to you and learn the UI a little before progressing. 
+
+## Connecting to your instance
+
+With our existing setup, you'll only need the IP of your instance and the .ppk we downloaded during it's creation.
+Within putty, navigate to: Connection -> SSH -> Auth -> Credentials and put the file path for the private key in the top box.
+Head back to the session category and fill the Host name destination with the public IPv4 address of your instance and connect to your instance
+<Aside>Before connecting, you may find it useful to create this as a saved session for streamlined access in the future. Your private key & IP will need to be added back each time otherwise</Aside>
+
+
+## Further reading
+
+- More info on [EC2, for dummies](https://www.dummies.com/article/technology/information-technology/networking/cloud-computing/elastic-compute-cloud-ec2-233178/) 
+- Security [best practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html) for your VPC
+- Securing [apache](https://httpd.apache.org/docs/2.4/misc/security_tips.html)
