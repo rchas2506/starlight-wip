@@ -1,9 +1,9 @@
 # Stage 1: Build the application
-FROM node:lts AS build
+FROM node:20 AS build
 WORKDIR /app
 COPY . .
-RUN npm install
-RUN npm run build
+RUN npm install --force
+RUN npm run build --force
 
 # Stage 2: Configure Apache for HTTPS with Cloudflare certificates
 FROM httpd:2.4 AS runtime
